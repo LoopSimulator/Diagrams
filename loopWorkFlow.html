@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script  src='https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.3.1/mermaid.min.js'></script>
+</head>
+<body>
+  <div class="mermaid">
+    sequenceDiagram
+        participant L as Loop Simulator
+        Note over L: Start advertising as <br/>Peripheral 
+        participant M as Matlab Simulator
+        M->>+L: send connection request to Loop Simulator
+        L-->>-M: send ack "connected"
+        activate M
+        M->>+L: Connection successfull and send CGM Value
+        deactivate M
+        loop Every minute 
+            L->>M: send ack "getCGM"
+            M-->>L: send CGM value
+        end
+        L->>+M: send ack "stop"
+        Note over M: Stop sending CGM <br/>value to Peripheral 
+  </div>
+  <script>mermaid.initialize({startOnLoad:true, sequence: {actorMargin: 300}});</script>
+</body>
+</html>
